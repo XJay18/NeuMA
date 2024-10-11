@@ -30,6 +30,16 @@
 We propose the Neural Material Adaptor (NeuMA), which integrates existing physical laws with learned corrections, facilitating accurate learning of actual dynamics while maintaining the generalizability and interpretability of physical priors. Additionally, we propose Particle-GS, a particle-driven 3D Gaussian Splatting variant that bridges simulation and observed images, allowing back-propagate image gradients to optimize the simulator. Comprehensive experiments on various dynamics in terms of grounded particle accuracy, dynamic rendering quality, and generalization ability demonstrate that NeuMA can accurately capture intrinsic dynamics.
 </p>
 
+**Please consider citing our paper if you find it interesting or helpful to your research.**
+```
+@InProceedings{Cao_2024_NeuMA,
+    author    = {Cao, Junyi and Guan, Shanyan and Ge, Yanhao and Li, Wei and Yang, Xiaokang and Ma, Chao},
+    title     = {Neu{MA}: Neural Material Adaptor for Visual Grounding of Intrinsic Dynamics},
+    booktitle = {The Thirty-eighth Annual Conference on Neural Information Processing Systems (NeurIPS)},
+    year      = {2024}
+}
+```
+
 ---
 
 ### Basic Requirements
@@ -169,7 +179,11 @@ Then, you could enter `http://localhost:8890` to view the result like this:
 </p>
 
 ### Acknowledgement
-This codebase is built upon 3DGS[^3] and NCLaw[^4]. We thank all the authors for their great work and repos! We would also like to thank Shiju Zhang for his help in using Blender.
+This codebase is built upon 3DGS[^3] and NCLaw[^4]. We thank all the authors for their great work and repos! We would also like to thank Shiju Zhang for his help in using Blender in this work.
+
+---
+
+Please feel free to contact Junyi Cao (xjay2018@gmail.com) if you have any questions about this work.
 
 [^2]: We use an 80G A100 GPU for training.
 [^3]: https://github.com/graphdeco-inria/gaussian-splatting
