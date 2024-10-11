@@ -1,0 +1,93 @@
+########################################################################################
+#
+# Example Usage:
+# 
+# CUDA_VISIBLE_DEVICES=0 python experiments/inference.py \
+#   --config experiments/configs/demo/generalize-kunkun.yaml \
+#   --eval_steps 600 \
+#   --video_name kunkun \
+#   --debug_views e_${VIEW} \
+#   --skip_frames 5
+#
+# MAKE SURE YOU HAVE DOWNLOADED PRETRAINED CHECKPOINTS STATED IN README.MD
+#
+########################################################################################
+
+
+gpu: 0
+seed: 42
+debug: true
+debug_views: ['e_2']
+resume: false
+overwrite: false
+root: experiments/logs
+
+video_data:
+  eval: false
+  camera_type: NeuMASynthetic
+
+  data:
+    path: /path/to/RubberPawn               # Replace this with the path to the [RubberPawn] folder
+    transformsfile: eval_dynamic.json
+    white_background: true
+    init_frame: 0
+    exclude_steps: [-1]
+  camera:
+    resolution: 1
+    data_device: cpu
+
+sim:
+  gravity:
+    - 0.0
+    - -9.8
+    - 0.0
+  bc: noslip  # Chosen from [freeslip, noslip]
+  num_grids: 32
+  dt: 0.001
+  bound: 1    # This is the distance to the boundary
+  eps: 0.0
+  skip_frame: 1
+
+objects:
+  - sim_data_name: kunkun
+    # pretrained weights of NCLaw
+    pretrained_ckpt: experiments/base_models/plasticine_0300.pt
+
+    gaussian:
+      sh_degree: 3
+
+    particle_data:
+      shape:
+        asset_root: null
+        sort: null
+        ori_bounds:
+        - [0., 0., 0.]
+        - [1., 1., 1.]
+        sim_bounds:
+        - [0., 0., 0.]
+        - [1., 1., 1.]
+      vel:
+        lin_vel: [0, -1.0,  0]
+        ang_vel: [0.0, 0.0, 0.0]
+      rho: 1e3
+      clip_bound: 0.1
+
+    constitution:
+      elasticity:
+        layer_widths: [64, 64]
+        norm: null
+        nonlinearity: gelu
+        no_bias: True
+        normalize_input: True
+      plasticity:
+        layer_widths: [64, 64]
+        norm: null
+        alpha: 1e-3
+        nonlinearity: gelu
+        no_bias: True
+        normalize_input: True
+      load_lora: experiments/logs/rubberpawn-v1/finetune/1000_lora.pt
+      lora: 
+        r: 16
+        alpha: 16
+      views: ['e_2']
