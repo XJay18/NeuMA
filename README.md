@@ -115,11 +115,13 @@ Running logs and checkpoints will be saved to `experiments/logs/${EXP_NAME}`.
 
 ### Pretrained Neural Material Adaptors
 
-In case you do not have enough GPU resources[^2] to conduct dynamics grounding experiments, we have provided some pretrained checkpoints [here](https://1drv.ms/u/c/3f1ccc11f481c100/EU1wwLNl0ZBHq7Z9x8uEc1IBPUJF6QLX1nFu_kOWdNBvng?e=pSd46v). Download the file `checkpoints.zip` to the root directory of this project, unzip the file, and then you will get two extra folders: `experiments/assets` and `experiments/logs`. You may use these pretrained adaptors for following experiments (which require much less GPU memory).
+In case you do not have enough GPU resources[^2] to conduct dynamics grounding experiments, we have provided some pretrained checkpoints [here](https://1drv.ms/u/c/3f1ccc11f481c100/EU1wwLNl0ZBHq7Z9x8uEc1IBPUJF6QLX1nFu_kOWdNBvng?e=pSd46v). Download the file `checkpoints.zip` to the root directory of this project, unzip the file, and then you will get two extra folders: `experiments/assets` and `experiments/logs`. You may use these pretrained adaptors for the following experiments (which require much less GPU memory).
 
 ### Dynamics Rendering
 
 When dynamics grounding is finished, you may render image sequences using the learned neural material adaptor by running the following command in the console:
+
+>Please note that if you skip dynamics grounding and directly use our pretrained checkpoints, you should first modify the value of `video_data/data/path` to the correct dataset path in configuration files. Generally, you do not need to modify other items in these files for dynamics rendering.
 
 <details>
 <summary>On Synthetic Data</summary>
@@ -173,7 +175,10 @@ Note:
 The rendered video will be saved to `results/${EXP_NAME}`
 
 ### Dynamics Generalization
+
 We implement an interactive viewer to visualize dynamics generalization results. To use it, you may run the following command in the console:
+
+>Generally, you do not need to modify the configuration files stored in `experiments/configs/demo` if you use the interactive viewer, even if you skip dynamics grounding and directly use our pretrained checkpoints.
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python experiments/visualization.py -c experiments/configs/demo/multiobj-bb-cc.yaml --eval-steps 400 --port 8890
