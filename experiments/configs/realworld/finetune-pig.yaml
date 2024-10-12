@@ -9,8 +9,8 @@ resume: false
 overwrite: false
 
 root: experiments/logs
-sim_data_name: real-pig
-name: pig-v1
+sim_data_name: real-pig   # This is the name used in assets folder
+name: pig-v1              # This is the name used in logs folder, i.e., EXP_NAME
 pretrained_ckpt: experiments/base_models/jelly_0300.pt
 
 gaussian:

@@ -3,7 +3,7 @@ seed: 42
 debug: true
 resume: false
 overwrite: false
-sim_data_name: real-bun
+sim_data_name: real-bun   # This is the name used in assets folder
 
 gaussian:
   sh_degree: 0
