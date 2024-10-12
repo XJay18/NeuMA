@@ -1,0 +1,133 @@
+gpu: 0
+seed: 42
+debug: true
+debug_views:
+- r_0
+- r_1
+- r_2
+resume: false
+overwrite: false
+
+root: experiments/logs
+sim_data_name: real-burger
+name: burger-v1
+pretrained_ckpt: experiments/base_models/jelly_0300.pt
+
+gaussian:
+  sh_degree: 0
+  opacity_thres: 0.02
+  confidence: 0.95
+  max_particles: 10
+  kernels_path: /path/to/registered_kernels.ply   # Replace this with the path to the registered kernels
+
+video_data:
+  eval: false
+  camera_type: RealCapture
+  data:
+    path: /path/to/burger   # Replace this with the path to the dataset folder
+    white_background: false
+    exclude_steps:
+    - -1
+    used_views:
+    - r_0
+    - r_1
+    - r_2
+    read_mask_only: true
+  camera:
+    resolution: 1
+    data_device: cpu
+
+sim:
+  gravity:
+  - 0.0
+  - 0.0
+  - 9.8
+  bc: noslip
+  num_grids: 70
+  dt: 0.0005
+  bound: 1
+  eps: 0.0
+  skip_frame: 1
+
+particle_data:
+  shape:
+    asset_root: null
+    sort: null
+    ori_bounds:
+    - [0.0, 0.0, -1.015]
+    - [1.0, 1.0, -0.015]
+    sim_bounds:
+    - [0.0, 0.0, 0.0]
+    - [1.0, 1.0, 1.0]
+  rho: 1000.0
+  clip_bound: 0.1
+  downsample_factor: 1
+  particles_path: /path/to/registered_particles.ply   # Replace this with the path to the registered particles
+
+constitution:
+  elasticity:
+    layer_widths:
+    - 64
+    - 64
+    norm: null
+    nonlinearity: gelu
+    no_bias: true
+    normalize_input: true
+  elasticity_lr: 0.005
+  elasticity_wd: 0.0
+  elasticity_grad_max_norm: 0.1
+  elasticity_scheduler:
+    type: cos
+    max_steps: 1000
+    learning_rate_alpha: 0.04
+  plasticity:
+    layer_widths:
+    - 64
+    - 64
+    norm: null
+    alpha: 0.001
+    nonlinearity: gelu
+    no_bias: true
+    normalize_input: true
+  plasticity_lr: 0.0005
+  plasticity_wd: 0.0
+  plasticity_grad_max_norm: 0.1
+  plasticity_scheduler:
+    type: cos
+    max_steps: 1000
+    learning_rate_alpha: 0.04
+  warmup_step: 0
+  decay_init: 0.5
+  decay_final: 1.0
+  decay_steps: 5
+  lambda_max_decay: 0.4
+  lora:
+    r: 16
+    alpha: 16
+  num_epochs: 1000
+  num_frames: 19
+  substeps: 20
+  views:
+  - r_0
+  - r_1
+  - r_2
+  pixel_loss: l1
+  debug_image_steps: 2
+
+velocity:
+  num_epochs: 200
+  num_frames: 5
+  substeps: 20
+  lambda_reg: 0.0001
+  reg_all: true
+  views:
+  - r_0
+  - r_1
+  - r_2
+  pixel_loss: l1
+  debug_image_steps: 1
+  lr: 1.0
+  scheduler:
+    type: cos
+    max_steps: 200
+    learning_rate_alpha: 0.01

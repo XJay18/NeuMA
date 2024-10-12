@@ -1,0 +1,120 @@
+gpu: 0
+seed: 42
+debug: true
+debug_views: ['d_3']
+resume: false
+overwrite: false
+
+root: experiments/logs
+sim_data_name: jellyduck
+name: jellyduck-v1
+pretrained_ckpt: experiments/base_models/jelly_0300.pt
+
+gaussian:
+  sh_degree: 3
+  opacity_thres: 0.02
+  confidence: 0.95
+  max_particles: 10
+  kernels_path: /path/to/point_cloud.ply    # Replace this with the path to the reconstructed Gaussian kernels
+
+video_data:
+  eval: false
+  camera_type: NeuMASynthetic
+  data:
+    path: /path/to/JellyDuck                # Replace this with the path to the dataset folder
+    transformsfile: data_dynamic.json
+    white_background: true
+    exclude_steps:
+    - -1
+    used_views:
+    - d_3
+  camera:
+    resolution: 1
+    data_device: cpu
+
+sim:
+  gravity:
+  - 0.0
+  - -9.8
+  - 0.0
+  bc: noslip
+  num_grids: 32
+  dt: 0.001
+  bound: 1
+  eps: 0.0
+  skip_frame: 1
+
+particle_data:
+  shape:
+    asset_root: null
+    sort: null
+    ori_bounds:
+    - [0., -0.084, -0.]
+    - [1., 0.916, 1.]
+    sim_bounds:
+    - [0.1, 0., 0.1]
+    - [0.9, 0.8, 0.9]
+  rho: 1000.0
+  clip_bound: 0.1
+  mesh_path: /path/to/mesh.ply    # Replace this with the path to the reconstructed mesh
+  mesh_sample_mode: volumetric
+  mesh_sample_resolution: 36      # For sampling from the mesh, larger values will result in more particles
+
+constitution:
+  elasticity:
+    layer_widths:
+    - 64
+    - 64
+    norm: null
+    nonlinearity: gelu
+    no_bias: true
+    normalize_input: true
+  elasticity_lr: 0.008
+  elasticity_wd: 0.0
+  elasticity_grad_max_norm: 1.0
+  elasticity_scheduler:
+    type: cos
+    max_steps: 1000
+    learning_rate_alpha: 0.025
+  plasticity:
+    layer_widths:
+    - 64
+    - 64
+    norm: null
+    alpha: 0.001
+    nonlinearity: gelu
+    no_bias: true
+    normalize_input: true
+  plasticity_lr: 0.0008
+  plasticity_wd: 0.0
+  plasticity_grad_max_norm: 1.0
+  plasticity_scheduler:
+    type: cos
+    max_steps: 1000
+    learning_rate_alpha: 0.025
+  warmup_step: 0
+  decay_init: 0.5
+  decay_final: 1.0
+  decay_steps: 80
+  lambda_max_decay: 0.33
+  lora:
+    r: 16
+    alpha: 16
+  num_epochs: 1000
+  substeps: 1
+  num_frames: 400
+  views:
+  - d_3
+
+velocity:
+  num_epochs: 200
+  num_frames: 20
+  substeps: 1
+  lambda_reg: 0.005
+  views:
+  - d_3
+  lr: 1.0
+  scheduler:
+    type: cos
+    max_steps: 200
+    learning_rate_alpha: 0.01

@@ -1,0 +1,51 @@
+gpu: 0
+seed: 42
+debug: true
+resume: false
+overwrite: false
+sim_data_name: real-pig
+
+gaussian:
+  sh_degree: 0
+  opacity_thres: 0.02
+  confidence: 0.95
+  max_particles: 10
+  kernels_path: /path/to/point_cloud.ply    # Replace this with the path to the reconstructed Gaussian kernels
+
+particle_data:
+  mesh_path: /path/to/mesh.ply    # Replace this with the path to the reconstructed mesh
+  mesh_sample_mode: volumetric
+  mesh_sample_resolution: 40      # For sampling from the mesh, larger values will result in more particles
+
+video_data:
+  eval: false
+  camera_type: RealCapture
+  data:
+    path: /path/to/pig        # Replace this with the path to the dataset folder
+    white_background: false
+    exclude_steps:
+    - -1
+    used_views:
+    - r_0
+    - r_1
+    - r_2
+    init_frame: 0
+    read_mask_only: true
+  camera:
+    resolution: 1
+    data_device: cpu
+
+register:
+  views: all
+  num_iter: 20_000
+  lr_r: 0.0001
+  lr_t: 0.00005
+  lr_s: 0.00001
+  INIT_R: [90, 0, 90]
+  INIT_T: [0.09, 0.26, -0.23]
+  INIT_S: [0.1]
+  pixel_loss: l1
+  lambda_ssim_loss: 0.1
+  scheduler:
+    max_steps: 20_000
+    learning_rate_alpha: 0.01

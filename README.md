@@ -75,11 +75,13 @@ We consider both synthetic and real-world data in our experiments.
 - The synthetic data is crafted by ourselves and can be accessed via [this link](https://1drv.ms/u/c/3f1ccc11f481c100/EZUKCz9lrVBLquZGaXqvF1IB_XVKBBx4BK2LAt8GuFpVZQ?e=ub9Jek). For more information, please refer to Appendix B of our paper.
 - The real-world data is collected by Spring-Gaus[^1] and our preprocessed version can be accessed via [this link](https://1drv.ms/u/c/3f1ccc11f481c100/Edqcvj_qOK9HgWycdfX53UMBn-5XTTh3VDcu56CcNEzx6A?e=LT0R1j). For more information, please refer to Section 4.1 of Spring-Gaus.
 
+Please make sure to download and unzip the data before executing the following commands.
+
 [^1]: Licheng Zhong, Hong-Xing Yu, Jiajun Wu, and Yunzhu Li. Reconstruction and simulation of elastic objects with spring-mass 3D gaussians. In ECCV, 2024.
 
 ### Dynamics Grounding
 
-You may start a new experiment for dynamics grounding by running the following command in the console:
+Please first check the configuration files stored in `experiments/configs` and make some necessary modifications to those lines with annotations. You may then start a new experiment for dynamics grounding by running the following command in the console:
 
 <details>
 <summary>On Synthetic Data</summary>
@@ -109,11 +111,11 @@ CUDA_VISIBLE_DEVICES=0 python experiments/finetune.py -c experiments/configs/rea
 
 </details>
 
-Running logs and checkpoints will be saved to `experiments/logs/${EXP_NAME}`
+Running logs and checkpoints will be saved to `experiments/logs/${EXP_NAME}`.
 
 ### Pretrained Neural Material Adaptors
 
-In case you do not have enough GPU resources[^2] to conduct dynamics grounding experiments, we have provided some pretrained checkpoints [here](#pretrained-neural-material-adaptors). You may use these pretrained adaptors for following experiments (which require much less GPU memory).
+In case you do not have enough GPU resources[^2] to conduct dynamics grounding experiments, we have provided some pretrained checkpoints [here](https://1drv.ms/u/c/3f1ccc11f481c100/EU1wwLNl0ZBHq7Z9x8uEc1IBPUJF6QLX1nFu_kOWdNBvng?e=pSd46v). Download the file `checkpoints.zip` to the root directory of this project, unzip the file, and then you will get two extra folders: `experiments/assets` and `experiments/logs`. You may use these pretrained adaptors for following experiments (which require much less GPU memory).
 
 ### Dynamics Rendering
 
@@ -157,10 +159,15 @@ CUDA_VISIBLE_DEVICES=0 python experiments/render.py \
 </details>
 
 Note: 
+
 `--eval_steps`: Number of simulation steps.
+
 `--load_lora`: Name of the pretrained neural material adaptor stored in the folder `experiments/logs/${EXP_NAME}/finetune`. If not specified, only the base model (i.e., $\mathcal{M}_0$) will be used.
+
 `--video_name`: Name of the rendered video.
-`--debug_views`: A list of camera view(s) to render video. `${VIEW}` should be a number.
+
+`--debug_views`: A list of camera view(s) to render video. `${VIEW}` should be a number. Please note there is a preceding letter for each camera view.
+
 `--skip_frames`: Number of skip frames when packing the video. E.g., `--skip_frames 5` means we select every 5th frame when packing the video.
 
 The rendered video will be saved to `results/${EXP_NAME}`
@@ -175,7 +182,7 @@ CUDA_VISIBLE_DEVICES=0 python experiments/visualization.py -c experiments/config
 Then, you could enter `http://localhost:8890` to view the result like this:
 
 <p align="center">
-    <img src="resources/vis.png" alt="Interactive Viewer" width="60%">
+    <img src="resources/vis.gif" alt="Interactive Viewer" width="60%">
 </p>
 
 ### Acknowledgement
