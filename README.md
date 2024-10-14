@@ -15,7 +15,7 @@
     Chao Ma
 
   </p>
-  <h3 align="center"> Paper | <a href="https://xjay18.github.io/projects/neuma.html" target="_blank"> Website </a> | <a href="#data"> Data </a></h3>
+  <h3 align="center"> <a href="https://arxiv.org/pdf/2410.08257" target="_blank"> Paper </a> &nbsp;&nbsp; | &nbsp;&nbsp; <a href="https://xjay18.github.io/projects/neuma.html" target="_blank"> Website </a> &nbsp;&nbsp; | &nbsp;&nbsp; <a href="#data"> Data </a></h3>
   <div align="center"></div>
 </p>
 
@@ -172,7 +172,7 @@ Note:
 
 `--skip_frames`: Number of skip frames when packing the video. E.g., `--skip_frames 5` means we select every 5th frame when packing the video.
 
-The rendered video will be saved to `results/${EXP_NAME}`
+The rendered video will be saved to `results/${EXP_NAME}`.
 
 ### Dynamics Generalization
 
