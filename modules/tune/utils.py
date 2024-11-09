@@ -3,13 +3,14 @@ import sys
 import time
 import torch
 import mediapy
+import imageio
 import trimesh
 import warp as wp
 import numpy as np
 from PIL import Image
 from pathlib import Path
 from natsort import natsorted
-from typing import Optional, List
+from typing import Optional, List, Tuple
 from typing_extensions import Literal
 from modules.nclaw.sph import volume_sampling
 from modules.d3gs.scene.gaussian_model import GaussianModel
@@ -115,6 +116,44 @@ def save_video_mediapy(
     print(f"Video saved to {output_path} with skip frame {skip_frame} and fps {fps}")
 
 
+# In case mediapy not works correctly, use imageio to save gifs
+def save_gif_imageio(
+    frame_dir: Path,
+    frame_name: str,
+    output_path: Path,
+    skip_frame: int = 1,
+    fps: int = 30,
+    white_bg: bool = False,
+    resize: Optional[Tuple[int, int]] = None,
+):
+    np_frames = list()
+    image_paths = [i for i in frame_dir.glob(frame_name)]
+    image_paths = natsorted(image_paths)[::skip_frame]
+
+    for image_path in image_paths:
+        image = Image.open(image_path)
+        if resize is not None:
+            # resize to 400x400
+            image = image.resize(size=resize)
+        if image.mode == "RGBA":
+            background_color = np.array([1, 1, 1]) if white_bg else np.array([0, 0, 0])
+            image_rgba = np.array(image)
+            norm_rgba = image_rgba / 255.0
+            norm_rgba = norm_rgba[:, :, :3] * norm_rgba[:, :, 3:] + (1 - norm_rgba[:, :, 3:]) * background_color
+            image_arr = np.array(norm_rgba*255.0, dtype=np.uint8)
+        elif image.mode == "RGB":
+            image_arr = np.array(image)
+        else:
+            raise ValueError(f"Unsupported image mode: {image.mode}")
+        np_frames.append(image_arr)
+    
+    with imageio.get_writer(output_path, mode='I', fps=fps, loop=0) as writer:
+        for frame in np_frames:
+            writer.append_data(frame)
+
+    print(f"GIF saved to {output_path} with skip frame {skip_frame} and fps {fps}")
+
+
 def uniform_sampling(mesh: trimesh.Trimesh, resolution: int) -> np.ndarray:
     bounds = mesh.bounds.copy()
     # mesh.vertices = (mesh.vertices - bounds[0]) / (bounds[1] - bounds[0])
@@ -214,7 +253,8 @@ def prepare_simulation_data(
             os.system(f"cp {mesh_path} {save_dir}/mesh{mesh_path.suffix}")
             mesh: trimesh.Trimesh = trimesh.load(mesh_path, force='mesh')
             if not mesh.is_watertight:
-                raise ValueError(f'Invalid mesh from [{mesh_path}]: not watertight')
+                print(f'[**WARNING**] Invalid mesh from [{mesh_path}]: not watertight!')
+                print(f'[**WARNING**] Please manually check the sampled particles in case of unexpected results!')
             if mesh_sample_mode == "uniform":
                 particles = uniform_sampling(mesh, mesh_sample_resolution)
             elif mesh_sample_mode == "volumetric":

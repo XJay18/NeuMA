@@ -50,11 +50,13 @@ Please ensure that you have already installed the following packages.
 conda create -n neuma python=3.10
 conda activate neuma
 conda install numpy==1.26.4 pytorch==2.2.1 torchvision==0.17.1 torchaudio==2.2.1 pytorch-cuda=11.8 -c pytorch -c nvidia
-pip install opencv-python==4.9.0.80 e3nn==0.5.1 einops==0.8.0 natsort==8.4.0 nerfview==0.0.3 omegaconf==2.3.0 pyvista==0.44.0 splines==0.3.2 torchmetrics tensorboardX tqdm plyfile trimesh mediapy viser==0.2.3 warp-lang==0.6.1
+pip install opencv-python==4.9.0.80 e3nn==0.5.1 einops==0.8.0 natsort==8.4.0 nerfview==0.0.3 omegaconf==2.3.0 pyvista==0.44.0 splines==0.3.2 torchmetrics tensorboardX tqdm plyfile trimesh mediapy imageio viser==0.2.3 warp-lang==0.6.1
 
 # Install gaussian-splatting
-git clone git@github.com:graphdeco-inria/gaussian-splatting.git --recursive
+git clone https://github.com/graphdeco-inria/gaussian-splatting --recursive
 cd gaussian-splatting
+# Checkout the compatible version
+git checkout b17ded92b56ba02b6b7eaba2e66a2b0510f27764 --recurse-submodules
 pip install submodules/diff-gaussian-rasterization
 pip install submodules/simple-knn
 cd ..
@@ -81,7 +83,7 @@ Please make sure to download and unzip the data before executing the following c
 
 ### Dynamics Grounding
 
-Please first check the configuration files stored in `experiments/configs` and make some necessary modifications to those lines with annotations. You may then start a new experiment for dynamics grounding by running the following command in the console:
+Please first check the configuration files stored in [`experiments/configs`](experiments/configs) and make some necessary modifications to those lines with annotations. You may then start a new experiment for dynamics grounding by running the following command in the console:
 
 <details>
 <summary>On Synthetic Data</summary>
@@ -178,7 +180,7 @@ The rendered video will be saved to `results/${EXP_NAME}`.
 
 We implement an interactive viewer to visualize dynamics generalization results. To use it, you may run the following command in the console:
 
->Generally, you do not need to modify the configuration files stored in `experiments/configs/demo` if you use the interactive viewer, even if you skip dynamics grounding and directly use our pretrained checkpoints.
+>Generally, you do not need to modify the configuration files stored in [`experiments/configs/demo`](experiments/configs/demo) if you use the interactive viewer, even if you skip dynamics grounding and directly use our pretrained checkpoints.
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python experiments/visualization.py -c experiments/configs/demo/multiobj-bb-cc.yaml --eval-steps 400 --port 8890
