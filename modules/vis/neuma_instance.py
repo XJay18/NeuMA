@@ -72,11 +72,8 @@ class NeuMAInstance(object):
 
         self.cfg = cfg
 
-        self.background = (
-            torch.tensor([1, 1, 1], dtype=torch.float32, device=self.torch_device)
-            if cfg.video_data.data.get("white_background", False)   # default to black background
-            else torch.tensor([0, 0, 0], dtype=torch.float32, device=self.torch_device)
-        )
+        #    -- use white background for the interactive viewer
+        self.background = torch.tensor([1, 1, 1], dtype=torch.float32, device=self.torch_device)
 
         self.simulate()
     

@@ -63,14 +63,17 @@ class DynamicViewer(Viewer):
         server.scene.set_up_direction(f"+{up_axis}")
         if up_axis == "x":
             grid_plane = "yz"
+            grid_position = (0., 0.5, 0.5)
             self.up_axis = 0
         elif up_axis == "y":
             grid_plane = "xz"
+            grid_position = (0.5, 0., 0.5)
             self.up_axis = 1
         else:
             grid_plane = "xy"
+            grid_position = (0.5, 0.5, 0.)
             self.up_axis = 2
-        server.scene.add_grid('floor', 1, 1, 1, 1, grid_plane, position=(0.5, 0., 0.5))
+        server.scene.add_grid('floor', 1, 1, 1, 1, grid_plane, position=grid_position)
         super().__init__(server, render_fn, mode)
 
     def _define_guis(self):
@@ -92,7 +95,7 @@ class DynamicViewer(Viewer):
                 object_guis = add_gui_object_group(
                     server,
                     obj.sim_data_name.split('-')[0],
-                    drop_vel=abs(obj.particle_data.vel.lin_vel[1]),
+                    drop_vel=abs(obj.particle_data.vel.lin_vel[self.up_axis]),
                     weight=obj.constitution.lora.alpha / obj.constitution.lora.r,
                     neuma=PATH2NeuMA[obj.constitution.load_lora],
                 )
