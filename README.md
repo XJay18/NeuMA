@@ -117,7 +117,7 @@ Running logs and checkpoints will be saved to `experiments/logs/${EXP_NAME}`.
 
 ### Pretrained Neural Material Adaptors
 
-In case you do not have enough GPU resources[^2] to conduct dynamics grounding experiments, we have provided some pretrained checkpoints [here](https://1drv.ms/u/c/3f1ccc11f481c100/EU1wwLNl0ZBHq7Z9x8uEc1IBPUJF6QLX1nFu_kOWdNBvng?e=pSd46v). Download the file `checkpoints.zip` to the root directory of this project, unzip the file, and then you will get two extra folders: `experiments/assets` and `experiments/logs`. You may use these pretrained adaptors for the following experiments (which require much less GPU memory).
+In case you do not have enough GPU resources[^2] to conduct dynamics grounding experiments, we have provided some pretrained checkpoints [here](https://1drv.ms/f/c/3f1ccc11f481c100/EgQDL270OjxDmbXQhMB-IbcBwK89e2xQkpZCrWmlxsQC6A?e=GhJlH9). You will see two folders `assets` and `logs`. You may put them under the [`experiments`](experiments) directory and then use these pretrained adaptors for the following experiments (which require much less GPU memory).
 
 ### Dynamics Rendering
 

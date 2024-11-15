@@ -1,0 +1,83 @@
+########################################################################################
+#
+# CREDIT: https://www.fab.com/listings/6815a9cb-78d4-42f5-b7df-828890eb91b3
+#
+# Asset can be found at:
+# https://1drv.ms/f/c/3f1ccc11f481c100/Es9JJs3FQfBFizyesdN7StoBj0BNB0Z2_ad0-aVbZKqVFw?e=x4PFH7
+#
+# Example Usage:
+# 
+# CUDA_VISIBLE_DEVICES=0 python experiments/visualization.py \
+#   --config experiments/configs/demo/generalize-cupcake.yaml \
+#   --up-axis z \
+#   --eval-steps 600 \
+#   --port 8890
+#
+# MAKE SURE YOU HAVE DOWNLOADED PRETRAINED CHECKPOINTS STATED IN README.MD
+#
+########################################################################################
+
+
+gpu: 0
+seed: 42
+debug: true
+debug_views: ['e_2']
+resume: false
+overwrite: false
+root: experiments/logs
+
+sim:
+  gravity:
+    - 0.0
+    - 0.0
+    - -9.8
+  bc: noslip  # Chosen from [freeslip, noslip]
+  num_grids: 32
+  dt: 0.001
+  bound: 1    # This is the distance to the boundary
+  eps: 0.0
+  skip_frame: 1
+
+objects:
+  - sim_data_name: cupcake
+    # pretrained weights of NCLaw
+    pretrained_ckpt: experiments/base_models/plasticine_0300.pt
+
+    gaussian:
+      sh_degree: 0
+
+    particle_data:
+      shape:
+        asset_root: null
+        sort: null
+        ori_bounds:
+        - [-0.5, -0.5, -0.5]
+        - [0.5, 0.5, 0.5]
+        sim_bounds:
+        - [0.2, 0.2, 0.1]
+        - [0.8, 0.8, 0.7]
+      vel:
+        lin_vel: [0, 0, -0.1]
+        ang_vel: [0.0, 0.0, 0.0]
+      rho: 1e3
+      clip_bound: 0.1
+
+    constitution:
+      elasticity:
+        layer_widths: [64, 64]
+        norm: null
+        nonlinearity: gelu
+        no_bias: True
+        normalize_input: True
+      plasticity:
+        layer_widths: [64, 64]
+        norm: null
+        alpha: 1e-3
+        nonlinearity: gelu
+        no_bias: True
+        normalize_input: True
+      load_lora: experiments/logs/rubberpawn-v1/finetune/1000_lora.pt
+      lora: 
+        r: 16
+        alpha: 16
+      views: ['e_2']
