@@ -15,7 +15,7 @@
     Chao Ma
 
   </p>
-  <h3 align="center"> <a href="https://arxiv.org/pdf/2410.08257" target="_blank"> Paper </a> &nbsp;&nbsp; | &nbsp;&nbsp; <a href="https://xjay18.github.io/projects/neuma.html" target="_blank"> Website </a> &nbsp;&nbsp; | &nbsp;&nbsp; <a href="#data"> Data </a></h3>
+  <h3 align="center"> <a href="https://openreview.net/pdf?id=AvWB40qXZh" target="_blank"> Paper </a> &nbsp;&nbsp; | &nbsp;&nbsp; <a href="https://xjay18.github.io/projects/neuma.html" target="_blank"> Website </a> &nbsp;&nbsp; | &nbsp;&nbsp; <a href="#data"> Data </a></h3>
   <div align="center"></div>
 </p>
 
