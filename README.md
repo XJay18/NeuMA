@@ -15,14 +15,14 @@
     Chao Ma
 
   </p>
-  <h3 align="center"> <a href="https://openreview.net/pdf?id=AvWB40qXZh" target="_blank"> Paper </a> &nbsp;&nbsp; | &nbsp;&nbsp; <a href="https://xjay18.github.io/projects/neuma.html" target="_blank"> Website </a> &nbsp;&nbsp; | &nbsp;&nbsp; <a href="#data"> Data </a></h3>
+  <h3 align="center"> <a href="https://openreview.net/pdf?id=AvWB40qXZh" target="_blank"> Paper </a> &nbsp;&nbsp; | &nbsp;&nbsp; <a href="https://xjay18.github.io/NeuMA_page/" target="_blank"> Website </a> &nbsp;&nbsp; | &nbsp;&nbsp; <a href="#data"> Data </a></h3>
   <div align="center"></div>
 </p>
 
 
 <p align="center">
   <a href="">
-    <img src="https://xjay18.github.io/projects/assets/neuma/neuma_arch.png" alt="NeuMA framework" width="85%">
+    <img src="https://xjay18.github.io/NeuMA_page/assets/neuma/neuma_arch.png" alt="NeuMA framework" width="85%">
   </a>
 </p>
 
